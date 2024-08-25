@@ -37,3 +37,28 @@ def register():
         flash(error) # if validation fails, a error is shown. Flash messages can be retrieved when rendering a template.
     
     return render_template('/auth/register.html')
+
+@bp.route('/login', method=('GET', 'POST'))
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        db = get_db()
+        error = None
+        user = db.execute(
+            'SELECT * FROM user WHERE username = ?', (username)
+        ).fetchone() # fetchone() returns one row from the query. If the query returns no results, it returns None.
+        
+        if user is None:
+            error = "Incorrect username"
+        elif not check_password_hash(user['password'], password): # hashes the submitted passwords and securly compares them.
+            error = "Incorrect password"
+        
+        if error is None:
+            session.clear()
+            session['user_id'] = user['id'] # session is a dict that stores data. If validation succeeds, user's id is stored in a new session
+            return redirect(url_for('index'))
+        
+        flash(error)
+    
+    return render_template('/auth/login.html')

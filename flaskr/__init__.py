@@ -32,6 +32,6 @@ def create_app(test_config=None):
     db.init_app(app) #import and call the function from factory
     
     from . import auth
-    app.register_blueprint(auth.bp) # Import and register the blueprint from the factory function
+    app.register_blueprint(auth.bp) # Import and register the blueprint from the factory function 
         
     return app
