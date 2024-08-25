@@ -83,7 +83,9 @@ def login_required(view):
     @functools.wraps(view) # This decorator returns a new view function that wraps the original view it's applied to.
     def wrapped_view(**kwargs): # It checks if a user is loaded and redirects to the login page otherwise. If is loaded the original view is called and continues normally.
         if g.user is None:
-            return redirect(url_for('auth.login'))
-        
+            return redirect(url_for('auth.login')) 
+        # url_for() generates the URL to a view based on a name and arguments. The name associated is also called the 'endpoint', and by default it's the same as the name of the view function. 
+        # When using a blueprint, the name of the blueprint is prepended to the name of the function, so the endpoint for the 'login' function is 'auth.login' because you added it to the 'auth' blueprint.
+
         return view(**kwargs)
     return wrapped_view
