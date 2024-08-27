@@ -15,9 +15,9 @@ from .db import get_db
 
 bp = Blueprint("auth", __name__, url_prefix="/auth") # This creates a Blueprint named 'auth'. Like the application object, the blueprint needs to know where it’s defined, so __name__ is passed as the second argument. The url_prefix will be prepended to all the URLs associated with the blueprint.
 
-@bp.route('/')
-def index():
-    return "Hello, World!"
+# @bp.route('/index')
+# def index():
+#     return "Hello, World!"
 
 
 def login_required(view):
@@ -82,7 +82,7 @@ def register():
 
         flash(error) # if validation fails, a error is shown. Flash messages can be retrieved when rendering a template.
 
-    return render_template("auth/register.html")
+    return render_template("/auth/register.html")
 
 
 @bp.route("/login", methods=("GET", "POST"))
@@ -110,7 +110,7 @@ def login():
 
         flash(error)
 
-    return render_template("auth/login.html")
+    return render_template("/auth/login.html")
 
 
 @bp.route("/logout")
